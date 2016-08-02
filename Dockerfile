@@ -20,7 +20,8 @@ RUN curl -L -O https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE
     rm -rf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
 
 # configure apache
-RUN a2enmod ssl headers proxy proxy_http proxy_html xml2enc rewrite usertrack && \
+RUN echo "ServerName localhost" >> /etc/apache2/conf-enabled/hostname.conf && \
+    a2enmod ssl headers proxy proxy_http proxy_html xml2enc rewrite usertrack && \
     a2dissite 000-default default-ssl && \
     mkdir -p /var/lock/apache2 && \
     mkdir -p /var/run/apache2
