@@ -1,7 +1,0 @@
-#!/bin/bash
-
-# init only if lets-encrypt is running for the first time
-if [ ! -d $LETSENCRYPT_HOME ] || [ ! "$(ls -A $LETSENCRYPT_HOME)" ]; then
-    certbot -n --apache --agree-tos --email $WEBMASTER_MAIL --domains $DOMAINS
-    service apache2 stop
-fi

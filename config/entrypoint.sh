@@ -1,9 +1,7 @@
 #!/bin/bash
 
-# if init-file does not exist, template it.
-[ ! -f /init_letsencrypt.sh ] && dockerize -template /init_letsencrypt.sh.j2:/init_letsencrypt.sh && chmod a+x /*.sh
-
-/init_letsencrypt.sh
+# init only if lets-encrypt is running for the first time
+([ ! -d $LETSENCRYPT_HOME ] || [ ! "$(ls -A $LETSENCRYPT_HOME)" ]) && /init_letsencrypt.sh --domains $DOMAINS && service apache2 stop
 
 # run supervisor, which runs apache and cron
 /usr/bin/supervisord
