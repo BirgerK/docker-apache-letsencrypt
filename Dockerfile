@@ -33,5 +33,5 @@ RUN chmod +x /*.sh
 # Run the Sync server
 EXPOSE 80
 EXPOSE 443
-VOLUME [ "$LETSENCRYPT_HOME", "/etc/apache2/sites-available" ]
+VOLUME [ "$LETSENCRYPT_HOME", "/etc/apache2/sites-available", "/var/log/apache2" ]
 ENTRYPOINT ["/entrypoint.sh"]
