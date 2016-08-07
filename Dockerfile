@@ -15,10 +15,14 @@ RUN echo "deb http://ftp.debian.org/debian jessie-backports main" >> /etc/apt/so
 
 # configure apache
 RUN echo "ServerName localhost" >> /etc/apache2/conf-enabled/hostname.conf && \
+    echo "ServerTokens Prod" >> /etc/apache2/conf-enabled/misc.conf && \
+    echo "ServerSignature Off" >> /etc/apache2/conf-enabled/misc.conf && \
     a2enmod ssl headers proxy proxy_http proxy_html xml2enc rewrite usertrack && \
     a2dissite 000-default default-ssl && \
     mkdir -p /var/lock/apache2 && \
     mkdir -p /var/run/apache2
+
+ADD config/mods-available/proxy_html.conf /etc/apache2/mods-available/
 
 # configure supervisor
 ADD config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
