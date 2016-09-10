@@ -1,15 +1,23 @@
-FROM debian:8
+FROM phusion/baseimage:0.9.19
 MAINTAINER BirgerK <birger.kamp@gmail.com>
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV LETSENCRYPT_HOME /etc/letsencrypt
+ENV DOMAINS ""
+ENV WEBMASTER_MAIL ""
+
+# Manually set the apache environment variables in order to get apache to work immediately.
+RUN echo $WEBMASTER_MAIL > /etc/container_environment/WEBMASTER_MAIL && \
+    echo $DOMAINS > /etc/container_environment/DOMAINS && \
+    echo $LETSENCRYPT_HOME > /etc/container_environment/LETSENCRYPT_HOME
+
+CMD ["/sbin/my_init"]
 
 # Base setup
 # ADD resources/etc/apt/ /etc/apt/
-RUN echo "deb http://ftp.debian.org/debian jessie-backports main" >> /etc/apt/sources.list && \
-    apt-get -y update && \
-    apt-get install -q -y supervisor cron curl apache2 nano && \
-    apt-get install -y python-certbot-apache -t jessie-backports && \
+RUN apt-get -y update && \
+    apt-get install -q -y curl apache2 && \
+    apt-get install -q -y python-letsencrypt-apache && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
@@ -22,18 +30,16 @@ RUN echo "ServerName localhost" >> /etc/apache2/conf-enabled/hostname.conf && \
     mkdir -p /var/lock/apache2 && \
     mkdir -p /var/run/apache2
 
-# configure supervisor
-ADD config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-ADD config/supervisord/supervisord_apache.conf /etc/supervisor/conf.d/supervisord_apache.conf
-ADD config/supervisord/supervisord_cron.conf /etc/supervisor/conf.d/supervisord_cron.conf
+# configure runit
+RUN mkdir /etc/service/apache
+ADD config/scripts/run_apache.sh /etc/service/apache/run
+ADD config/scripts/init_letsencrypt.sh /etc/my_init.d/
+ADD config/scripts/init_letsencrypt.sh /run_letsencrypt.sh
+RUN chmod +x /*.sh && chmod +x /etc/my_init.d/*.sh && chmod +x /etc/service/apache/*
 
-# add start-stuff
-ADD config/init_letsencrypt.sh /init_letsencrypt.sh
-ADD config/entrypoint.sh /entrypoint.sh
-RUN chmod +x /*.sh
+ADD config/crontab /etc/crontab
 
-# Run the Sync server
+# Stuff
 EXPOSE 80
 EXPOSE 443
 VOLUME [ "$LETSENCRYPT_HOME", "/etc/apache2/sites-available", "/var/log/apache2" ]
-ENTRYPOINT ["/entrypoint.sh"]
