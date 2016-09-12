@@ -34,7 +34,7 @@ RUN echo "ServerName localhost" >> /etc/apache2/conf-enabled/hostname.conf && \
 RUN mkdir /etc/service/apache
 ADD config/scripts/run_apache.sh /etc/service/apache/run
 ADD config/scripts/init_letsencrypt.sh /etc/my_init.d/
-ADD config/scripts/init_letsencrypt.sh /run_letsencrypt.sh
+ADD config/scripts/run_letsencrypt.sh /run_letsencrypt.sh
 RUN chmod +x /*.sh && chmod +x /etc/my_init.d/*.sh && chmod +x /etc/service/apache/*
 
 ADD config/crontab /etc/crontab
