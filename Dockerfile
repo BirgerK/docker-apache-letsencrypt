@@ -17,7 +17,7 @@ CMD ["/sbin/my_init"]
 # ADD resources/etc/apt/ /etc/apt/
 RUN apt-get -y update && \
     apt-get install -q -y curl apache2 && \
-    apt-get install -q -y python-letsencrypt-apache && \
+    apt-get install -q -y python-letsencrypt-apache fail2ban&& \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 

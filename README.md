@@ -1,6 +1,6 @@
 # Docker - Apache with Let's Encrypt
 
-This is a debian-based image which runs an apache and get's it SSL-certificates automatically from Let's Encrypt.
+This is a debian-based image which runs an apache and get's it SSL-certificates automatically from Let's Encrypt. It also contains [fail2ban](http://www.fail2ban.org/wiki/index.php/Main_Page) but it's not configured!
 
 ## Instructions
 
