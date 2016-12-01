@@ -13,4 +13,4 @@ function setTimeZone {
 }
 
 setTimeZone
-fail2ban-server -f -p /var/run/fail2ban/fail2ban.pid
+fail2ban-client -f -p /var/run/fail2ban/fail2ban.pid
