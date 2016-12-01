@@ -31,11 +31,14 @@ RUN echo "ServerName localhost" >> /etc/apache2/conf-enabled/hostname.conf && \
     mkdir -p /var/run/apache2
 
 # configure runit
-RUN mkdir /etc/service/apache
+RUN mkdir -p /etc/service/apache && \
+    mkdir -p /etc/service/fail2ban && \
+    mkdir -p /var/run/fail2ban/
 ADD config/scripts/run_apache.sh /etc/service/apache/run
+ADD config/scripts/run_fail2ban.sh /etc/service/fail2ban/run
 ADD config/scripts/init_letsencrypt.sh /etc/my_init.d/
 ADD config/scripts/run_letsencrypt.sh /run_letsencrypt.sh
-RUN chmod +x /*.sh && chmod +x /etc/my_init.d/*.sh && chmod +x /etc/service/apache/*
+RUN chmod +x /*.sh && chmod +x /etc/my_init.d/*.sh && chmod +x /etc/service/apache/* && chmod +x /etc/service/fail2ban/*
 
 ADD config/crontab /etc/crontab
 

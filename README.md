@@ -28,6 +28,13 @@ $ $UPDATED_DOMAINS="example.org,more.example.org"
 $ docker exec -it apache-ssl /run_letsencrypt.sh --domains $UPDATED_DOMAINS
 ```
 
+If you want to use fail2ban, you have to give this container on startup some more capabilities:
+
+```
+$ docker run -d --name apache-ssl --cap-add=NET_ADMIN birgerk/apache-letsencrypt
+```
+If you don't give this capabilities, the fail2ban-service will print some errorson startup. But your apache will work.
+You have to configure fail2ban on yourself if you want to use it!
 
 ### Configuring docker-container
 It's possible to configure the docker-container by setting the following environment-variables at container-startup:
