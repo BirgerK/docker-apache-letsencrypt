@@ -43,4 +43,4 @@ ADD config/crontab /etc/crontab
 # Stuff
 EXPOSE 80
 EXPOSE 443
-VOLUME [ "$LETSENCRYPT_HOME", "/etc/apache2/sites-available", "/var/log/apache2" ]
+VOLUME [ "$LETSENCRYPT_HOME", "/etc/apache2/sites-available", "/var/log/apache2", "/var/lib/fail2ban" ]
