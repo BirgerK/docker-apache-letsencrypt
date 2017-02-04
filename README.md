@@ -42,3 +42,19 @@ It's possible to configure the docker-container by setting the following environ
 * `DOMAINS`, configures which for which domains a SSL-certificate shall be requested from Let's Encrypt, default is `""`. Must be given as comma-seperated list, f.e.: `"example.com,my-internet.org,more.example.com"`.
 * `WEBMASTER_MAIL`, Let's Encrypt needs a mail-address from the webmaster of the requested domain. You have to set it, otherwise Let's Encrypt won't give the certificates. Default is `""`. Must be given as simple mail-address, f.e.: `"webmaster@example.com"`.
 * `STAGING`, if set with a not-null string use Let's Encrypt Staging environment to avoid rate limits during development.
+
+### Location of letsencrypt-certs
+After letsencrypt did authenticate your domains and you got your certificates, you'll find your certificates under `/etc/letsencrypt/live/<example.com>/`.
+
+So your https-virtualhost should like:
+```
+<VirtualHost *:443>
+	ServerName example.com
+	ServerAdmin webmaster@somewhere.org
+	DocumentRoot /var/www/html
+
+	SSLCertificateFile /etc/letsencrypt/live/${VIRTUAL_HOST}/fullchain.pem
+	SSLCertificateKeyFile /etc/letsencrypt/live/${VIRTUAL_HOST}/privkey.pem
+	Include /etc/letsencrypt/options-ssl-apache.conf
+</VirtualHost>
+```
