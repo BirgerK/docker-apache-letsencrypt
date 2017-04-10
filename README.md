@@ -24,7 +24,7 @@ The image will get letsencrypt-certificates on first boot. A cron-job renews the
 If you want to expand your certificate and you can remove the existing docker-container and start new one with the updated `DOMAINS`-list. If you don't want to recreate the container you can execute the following commands:
 
 ```
-$ $UPDATED_DOMAINS="example.org,more.example.org"
+$ UPDATED_DOMAINS="example.org,more.example.org"
 $ docker exec -it apache-ssl /run_letsencrypt.sh --domains $UPDATED_DOMAINS
 ```
 
