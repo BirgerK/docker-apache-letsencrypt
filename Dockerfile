@@ -17,7 +17,7 @@ CMD ["/sbin/my_init"]
 # ADD resources/etc/apt/ /etc/apt/
 RUN apt-get -y update && \
     apt-get install -q -y curl apache2 && \
-    apt-get install -q -y python-letsencrypt-apache fail2ban && \
+    apt-get install -q -y python-letsencrypt-apache && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
@@ -33,7 +33,6 @@ RUN echo "ServerName localhost" >> /etc/apache2/conf-enabled/hostname.conf && \
 # configure runit
 RUN mkdir -p /etc/service/apache
 ADD config/scripts/run_apache.sh /etc/service/apache/run
-ADD config/scripts/run_fail2ban.sh /etc/my_init.d/
 ADD config/scripts/init_letsencrypt.sh /etc/my_init.d/
 ADD config/scripts/run_letsencrypt.sh /run_letsencrypt.sh
 RUN chmod +x /*.sh && chmod +x /etc/my_init.d/*.sh && chmod +x /etc/service/apache/*
@@ -43,4 +42,4 @@ ADD config/crontab /etc/crontab
 # Stuff
 EXPOSE 80
 EXPOSE 443
-VOLUME [ "$LETSENCRYPT_HOME", "/etc/apache2/sites-available", "/var/log/apache2", "/var/lib/fail2ban" ]
+VOLUME [ "$LETSENCRYPT_HOME", "/etc/apache2/sites-available", "/var/log/apache2" ]
