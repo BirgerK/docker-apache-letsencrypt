@@ -6,7 +6,7 @@ if [ -f /var/run/apache2/apache2.pid ]; then
     echo "Found file 'apache2.pid' with pid $apachePid. Let's check if there is a process belonging to it!"
     processName=$(ps -p $apachePid -o comm)
 
-    if [ "$processName" != "apache2" && "$processName" != "/usr/sbin/apache2 -D FOREGROUND" ]; then
+    if [ "$processName" != "apache2" ] && [ "$processName" != "/usr/sbin/apache2 -D FOREGROUND" ]; then
         echo "The found apache.pid is not belonging to an apache-process. I'm going to remove the pid-file."
         rm -f /var/run/apache2/apache2.pid
         echo "Removing of pid-file was successfull."
