@@ -2,6 +2,7 @@
 
 This is a debian-based image which runs an apache and get's it SSL-certificates automatically from Let's Encrypt.
 
+
 ## Instructions
 
 ### Prepare your apache-config
@@ -10,6 +11,7 @@ There are some things you have to care about in your apache-config if you want t
 
 - for every domain given in `DOMAINS` there must be a apache-vhost which uses this domain as `ServerName` or `ServerAlias`. Else certbot won't get a certificate for this domain.
 - certbot does not support multiple vhosts in a config-file yet. If an config-file has more than a single vhost it will be ignored by certbot.
+
 
 ### Run it
 
@@ -30,13 +32,17 @@ $ UPDATED_DOMAINS="example.org,more.example.org"
 $ docker exec -it apache-ssl /run_letsencrypt.sh --domains $UPDATED_DOMAINS
 ```
 
+
 ### Configuring docker-container
 
 It's possible to configure the docker-container by setting the following environment-variables at container-startup:
 
 - `DOMAINS`, configures which for which domains a SSL-certificate shall be requested from Let's Encrypt, default is `""`. Must be given as comma-seperated list, f.e.: `"example.com,my-internet.org,more.example.com"`.
 - `WEBMASTER_MAIL`, Let's Encrypt needs a mail-address from the webmaster of the requested domain. You have to set it, otherwise Let's Encrypt won't give the certificates. Default is `""`. Must be given as simple mail-address, f.e.: `"webmaster@example.com"`.
-- `STAGING`, if set with a not-null string use Let's Encrypt Staging environment to avoid rate limits during development.
+- `STAGE`,
+  + if set with to `staging`, it will use the Let's Encrypt Staging environment to avoid rate limits during development.
+  + if set to `local`, it will generate a self-signed certificate.
+
 
 ### Location of letsencrypt-certs
 
