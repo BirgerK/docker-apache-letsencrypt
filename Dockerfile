@@ -1,4 +1,4 @@
-FROM phusion/baseimage:0.9.22
+FROM phusion/baseimage:0.10.1
 MAINTAINER BirgerK <birger.kamp@gmail.com>
 
 ENV DEBIAN_FRONTEND noninteractive
@@ -14,10 +14,11 @@ RUN echo $WEBMASTER_MAIL > /etc/container_environment/WEBMASTER_MAIL && \
 CMD ["/sbin/my_init"]
 
 # Base setup
-# ADD resources/etc/apt/ /etc/apt/
 RUN apt-get -y update && \
-    apt-get install -q -y curl apache2 && \
-    apt-get install -q -y python-letsencrypt-apache && \
+    apt-get install -q -y curl apache2 software-properties-common && \
+    add-apt-repository ppa:certbot/certbot && \
+    apt-get -y update && \
+    apt-get install -q -y python-certbot-apache && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
