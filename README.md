@@ -9,7 +9,7 @@ This is a debian-based image which runs an apache and get's it SSL-certificates 
 There are some things you have to care about in your apache-config if you want to use it with certbot:
 
 - for every domain given in `DOMAINS` there must be a apache-vhost which uses this domain as `ServerName` or `ServerAlias`. Else certbot won't get a certificate for this domain.
-- certbot does not support multiple vhosts in a config-file yet. If an config-file has more than a single vhost it will be ignored by certbot.
+- this image contains a simple apache webserver. Therefore you can configure your vhosts like you ever did.
 
 ### Run it
 
