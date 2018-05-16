@@ -1,3 +1,0 @@
-# choose a random minute for renewing certificate.
-# certbot will be thankful for it.
-0 36 2 * * * * letsencrypt renew >/dev/null 2>&1

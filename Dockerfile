@@ -38,8 +38,6 @@ ADD config/scripts/init_letsencrypt.sh /etc/my_init.d/
 ADD config/scripts/run_letsencrypt.sh /run_letsencrypt.sh
 RUN chmod +x /*.sh && chmod +x /etc/my_init.d/*.sh && chmod +x /etc/service/apache/*
 
-ADD config/crontab /etc/crontab
-
 # Stuff
 EXPOSE 80
 EXPOSE 443
