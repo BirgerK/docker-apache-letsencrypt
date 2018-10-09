@@ -19,7 +19,7 @@ For an easy test-startup you just have to:
 $ docker run -d --name apache-ssl birgerk/apache-letsencrypt
 ```
 
-Now you have locally an apache running, which get's it SSL-certificates from Let's Encrypt.
+Now you have locally an apache running, which gets it SSL-certificates from Let's Encrypt.
 
 The image will get letsencrypt-certificates on first boot. A cron-job renews the existing certificates automatically, so you don't have to care about it.
 
