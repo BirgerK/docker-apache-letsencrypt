@@ -1,4 +1,4 @@
-FROM phusion/baseimage:0.10.1
+FROM phusion/baseimage:0.11
 MAINTAINER BirgerK <birger.kamp@gmail.com>
 
 ENV DEBIAN_FRONTEND noninteractive
