@@ -1,4 +1,8 @@
+# DEPRECATED
+*I'm not updating this repo anymore*
+
 # Docker - Apache with Let's Encrypt
+
 
 This is a debian-based image which runs an apache and get's it SSL-certificates automatically from Let's Encrypt.
 
